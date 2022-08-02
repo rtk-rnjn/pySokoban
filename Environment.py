@@ -70,10 +70,7 @@ class Environment:
 		return platform.system()
 
 	def getUserInterface(self):
-		if os.getenv("DISPLAY"):
-			return "graphics"
-		else:
-			return "framebuffer"
+		return "graphics" if os.getenv("DISPLAY") else "framebuffer"
 		
 	def getPath(self):
 		return os.path.dirname(os.path.abspath(__file__))

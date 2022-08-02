@@ -26,35 +26,37 @@ class Level:
 		self.matrix_history.append(copy.deepcopy(matrix))
 
 	def getLastMatrix(self):
-		if len(self.matrix_history) > 0:
-			lastMatrix = self.matrix_history.pop()
-			self.matrix = lastMatrix
-			return lastMatrix
-		else:
+		if len(self.matrix_history) <= 0:
 			return self.matrix
+		lastMatrix = self.matrix_history.pop()
+		self.matrix = lastMatrix
+		return lastMatrix
 
 	def getPlayerPosition(self):
 		# Iterate all Rows
-		for i in range (0,len(self.matrix)):
+		for i in range(len(self.matrix)):
 			# Iterate all columns
-			for k in range (0,len(self.matrix[i])-1):
+			for k in range(len(self.matrix[i])-1):
 				if self.matrix[i][k] == "@":
 					return [k,i]
 
 	def getBoxes(self):
 		# Iterate all Rows
 		boxes = []
-		for i in range (0,len(self.matrix)):
+		for i in range(len(self.matrix)):
 			# Iterate all columns
-			for k in range (0,len(self.matrix[i])-1):
-				if self.matrix[i][k] == "$":
-					boxes.append([k,i])
+			boxes.extend(
+				[k, i]
+				for k in range(len(self.matrix[i]) - 1)
+				if self.matrix[i][k] == "$"
+			)
+
 		return boxes
 
 	def getSize(self):
 		max_row_length = 0
 		# Iterate all Rows
-		for i in range (0,len(self.matrix)):
+		for i in range(len(self.matrix)):
 			# Iterate all columns
 			row_length = len(self.matrix[i])
 			if row_length > max_row_length:
